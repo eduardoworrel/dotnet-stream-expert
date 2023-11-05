@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div id="cards" style="display: flex; flex-wrap: wrap;"></div>
+<script type="module">
+
+    let count = 0;
+    const cards = document.querySelector("#cards")
+    async function fetchData() {
+        const response = await fetch('http://localhost:5222');
+
+        let i = 0;
+
+        const read = response.body
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(parseNDJson())
+        .pipeTo(
+            new WritableStream({
+                write(chunk){
+                    // console.log(chunk)
+                    var body = `
+                    <div style='border:1px solid black; padding: 5px; margin: 5px'> 
+                        <p>Job Title: ${chunk["Job Title"]}</p>
+                        <p>Company: ${chunk["Company"]}</p>
+                        <p>Experience: ${chunk["Experience"]}</p>
+                        <p>Salary Range: ${chunk["Salary Range"]}</p>
+                    </div>
+                    `;
+
+                    if(++i > 10){
+                        cards.innerHTML = body
+                        i = 0;
+                    }
+                    cards.innerHTML += body
+                    
+                }, 
+                abort(reason){
+                    console.log(reason)
+                },
+                close(){
+                    console.log('Processados com erro',count)
+                }
+            })
+        )
+    }
+    
+    function parseNDJson(){
+        let leftover = '';
+
+        return new TransformStream({
+            async transform(chunk, controller) {
+                const lines = (leftover + chunk).split('\n');
+                leftover = '';
+
+                for (let i = 0; i < lines.length - 1; i++) {
+                const line = lines[i];
+                try {
+                    const json = JSON.parse(line);
+                    controller.enqueue(json);
+                } catch (e) {
+                    console.log(line);
+                    leftover += line;
+                    count++;
+                }
+                }
+
+                if (lines[lines.length - 1] !== '') {
+                leftover += lines[lines.length - 1];
+                }
+            }
+            });
+    }
+    fetchData()
+
+</script>
+</body>
+</html>
