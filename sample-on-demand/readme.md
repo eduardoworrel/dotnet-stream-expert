@@ -2,7 +2,7 @@
 
 ## Como testar
 
-- FFMPEG ([https://ffmpeg.org](https://ffmpeg.org))
+- Instale o FFMPEG ([https://ffmpeg.org](https://ffmpeg.org))
 
 - Qualquer video mp4
 
