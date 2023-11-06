@@ -1,9 +1,5 @@
 # 🔥📀 .NET Streams [Video transformado em tempo real para o navegador]
 
-![ffmpeg](../assets/3ways.gif)
-![ffmpeg](../assets/ffmpeg.gif)
----
-
 ## Como testar
 
 - FFMPEG ([https://ffmpeg.org](https://ffmpeg.org))

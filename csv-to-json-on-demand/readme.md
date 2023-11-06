@@ -1,7 +1,5 @@
 # 🔥📀 .NET Streams [CSV para JSON para o navegador]
 
-![ffmpeg](../assets/csv.gif)
----
 
 ## Como testar
 
