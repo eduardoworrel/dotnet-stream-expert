@@ -45,9 +45,7 @@ app.MapGet("/", async (HttpContext context
 // otimizado para streams.
 async Task WriteCSVOnDemand(StreamReader fileReader, PipeWriter writer)
 {
-    // Define o tamanho do lote para leitura do buffer. 
-    // O tamanho de 16KB atinge a menor latencia possível.
-    // (22s no mac m2 contra 44s com 8KB)
+
     const int BatchSize = 8192 * 2;  // 16KB
     char[] buffer = new char[BatchSize];
 
