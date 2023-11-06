@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>WebStreams vs Websockets vs SSE</h1>
+    <div id="content"></div>
+    <script>
+        const content = document.getElementById("content");
+        fetch("http://localhost:5031")
+        .then( response =>{
+            response.body
+            .pipeThrough(new TextDecoderStream())
+            .pipeTo(
+                new WritableStream({
+                    write(chunk){
+                        chunks = chunk.split("data: ");
+                        
+                        for(let chunk of chunks){
+                            if(!chunk.trim().length){
+                                continue
+                            }
+                            try{
+                                
+                                var json = JSON.parse(chunk);
+                                console.log(json)
+                                content.innerText += json.choices[0].delta.content
+                            }catch(e){
+                                console.log('err',e)
+                            }
+                        }
+                    }
+                })
+            )
+        })
+    </script>
+</body>
+</html>
