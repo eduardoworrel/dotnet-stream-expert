@@ -9,6 +9,7 @@ Esse repo contém 2 abordagens inspiradas em videos do [Erick Wendel](https://gi
 ## 👉 [/csv-to-json-on-demand](https://github.com/eduardoworrel/dotnet-stream-expert/tree/main/csv-to-json-on-demand)
 Como ler um CSV, transforma-lo em json em tempo real sem alocar memória no servidor e **envia-lo sob demanda conforme a transformação acontece**.
 - inspirado em **[Read 30GB+ Data in the Browser Without Blocking the Screen || Webstreams 101 || Erick Wendel](https://www.youtube.com/watch?v=EexM7EL9Blk)**
+
 ![ffmpeg](assets/csv.gif)
 
 ---
